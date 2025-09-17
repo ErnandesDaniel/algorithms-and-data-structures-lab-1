@@ -1,85 +1,47 @@
 #include <iostream>
-#include <string> // Служит для работы со строками
-#include <fstream> // Служит для работы с файлами
-#include <clocale>//Обработка кириллицы
+#include <string>  // Служит для работы со строками
 
-using namespace std; // Указываем пространство имен std
+using namespace std;  // Указываем пространство имен std
 
-void test ();
+bool isSquareString(string s);
 
-int main()
-{
+int main() {
+  int t;
 
-	// Установка поддержки кириллицы
-	setlocale(LC_CTYPE, "rus");
+  cin >> t;
 
+  for (int i = 0; i < t; i++) {
+    string s;
 
-	//Работа с консолью
+    cin >> s;
 
-	int a=0;
+    if (isSquareString(s)) {
+      cout << "YES" << endl;
+    } else {
+      cout << "NO" << endl;
+    }
+  }
 
-	cout << "a:"<< endl;
-	cout << a << endl;
-	cin >> a;
-	cout << a<< endl;
-
-	//Работа со статическими массивами
-
-	int b[4]={1, 2, 3, 4};
-
-	b[4]=10;
-
-	cout << b[4] << endl;
-
-	//Динамические массивы
-
-	int *nums= new int[3];
-
-	nums[0]=1;
-	cout << "dinamic array first element:" << nums[0] << endl;
-
-	delete[] nums;
-
-
-	//Работа со строками:
-
-	string test_string="test string instance";
-
-	cout << test_string << endl;
-
-	cin >> test_string;
-
-	cout << test_string << endl;
-
-
-	//Использование ссылок
-
-	int c=10;
-
-	int &d=c;//Записываем адрес переменной
-
-	cout << &c << "-" << c  << endl;//до изменения
-	cout << &d << "-" << d  << endl;//до изменения
-
-	d=5;
-
-	cout << &c << "-" << c  << endl;//после изменения
-	cout << &d << "-" << d  << endl;//после изменения
-
-	//Использование указателей
-
-	int t = 237; // Простая переменная
-	int *p; // Создание указателя, который принимает лишь адрес другой переменной
-
-	p = &t; // Устанавливаем адрес нашей первой переменной
-
-
-	//std::cin.get();//Программа ожидает ввода символа для завершения
-	return 0;
+  return 0;
 }
 
-void test () {
-	cout << "Вывод чего-либо в консоль" << endl;
+// Функция проверяет, является ли строка квадратной
+bool isSquareString(const string s) {
+  int len = s.length();
+
+  // Если длина нечётная — не может быть квадратной
+  if (len % 2 != 0) {
+    return false;
+  }
+
+  int half = len / 2;
+
+  // Сравниваем первую половину со второй
+  for (int i = 0; i < half; ++i) {
+    if (s[i] != s[half + i]) {
+      return false;
+    }
+  }
+
+  return true;
 }
-
-
