@@ -86,14 +86,32 @@ public:
         }
         cout << endl;
     }
+
+    void printArray() {
+        cout << "Массив: ";
+        for (int i = 0; i < n; ++i) {
+          cout << arr[i];
+          if (i < n - 1) cout << " ";
+        }
+        cout << endl;
+      }
+
 };
 
 int main() {
     SetConsoleOutputCP(CP_UTF8); // Для корректного вывода кириллицы в Windows
 
-    vector<int> a = {0, 1, 0, 2, 0, 3, 0, 4};
+    int N;
+    cin >> N;
 
-    SegmentTree segmentTree(a); // 👈 теперь переменная называется segmentTree
+    vector<int> inputArray(N);
+    for (int i = 0; i < N; ++i) {
+      cin >> inputArray[i];
+    }
+
+    //vector<int> a = {0, 1, 0, 2, 0, 3, 0, 4}; - пример входного массива
+    // 0 1 0 2 0 3 0 4 - запись в консоли (8 элементов)
+    SegmentTree segmentTree(inputArray);
 
     cout << "Исходное количество нулей на [0, 7]: " << segmentTree.query(0, 7) << endl;
     cout << "Количество нулей на [2, 5]: " << segmentTree.query(2, 5) << endl;
@@ -104,12 +122,15 @@ int main() {
     segmentTree.update(3, 0);
     cout << "После update(3, 0): нулей на [0,7]: " << segmentTree.query(0, 7) << endl;
 
+    cout << "Текущее состояние массива: ";
+    segmentTree.printArray();  // <-- наш новый метод
+
     // 👇 НОВОЕ: поиск k-го нуля
     cout << "\n=== Поиск k-го нуля ===" << endl;
     for (int k = 1; k <= segmentTree.query(0, 7); ++k) {
       int idx = segmentTree.findKthZero(k);
       cout << k << "-й ноль находится по индексу: " << idx
-           << " (значение: " << a[idx] << ")" << endl;
+           << " (значение: " << inputArray[idx] << ")" << endl;
     }
 
     // Попробуем найти несуществующий
