@@ -14,7 +14,7 @@ set(CMAKE_CXX_STANDARD 17)
 find_program(CLANG_FORMAT_EXE NAMES clang-format REQUIRED)
 
 # У тебя только main.cpp — можно расширить список при необходимости
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES zero-lab-main.cpp)
 
 # Цель: автоформатирование
 add_custom_target(format-code
