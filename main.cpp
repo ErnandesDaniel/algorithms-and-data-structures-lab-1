@@ -217,13 +217,12 @@ int main() {
     cout << "findKthZeroInRange(" << 2 << ", " << 4 << ", " << 1 << ") = " << idx;
 
 
-
-     // Попробуем найти несуществующий
-     int k = 10;
-     idx = segmentTree.findKthZero(k);
-     if (idx == -1) {
-       cout << "\n" << k << "-й ноль не существует." << endl;
-     }
+    // Попробуем найти несуществующий
+    int k = 10;
+      idx = segmentTree.findKthZeroInRange(2, 4, 2);
+      if (idx == -1) {
+        cout << "\n" << k << "-й ноль на отрезке [2, 4] не существует." << endl;
+    }
 
      cout << "\n=== Состояние дерева отрезков (tree[1..]) ===" << endl;
      segmentTree.printTree();
