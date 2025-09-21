@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
+
 using namespace std;
 
 class SegmentTree {
@@ -134,102 +136,101 @@ int main() {
     cin.tie(0);
 
 
-    //int N;
-    //cin >> N;
+    int N;
+    cin >> N;
 
-    // vector<int> inputArray(N);
-    // for (int i = 0; i < N; ++i) {
-    //   cin >> inputArray[i];
-    // }
+     vector<int> inputArray(N);
 
+     for (int i = 0; i < N; ++i) {
+       cin >> inputArray[i];
+     }
 
-    int N=5;
+    //int N=5;
 
-    vector<int> inputArray={0, 0, 3, 0, 2};
+    //vector<int> inputArray={0, 0, 3, 0, 2};
 
 
     SegmentTree segmentTree(inputArray);
 
-    // int M;
-    // cin >> M;
-    //
-    // char type;
-    //
-    // for (int i = 0; i < M; ++i) {
-    //   cin >> type;
-    //   if (type == 's') {
-    //     int l, r, k;
-    //     cin >> l >> r >> k;
-    //     // Если индексы вводятся 1-based — раскомментируй:
-    //     // l--; r--;
-    //     int idx = segmentTree.findKthZeroInRange(l, r, k);
-    //     cout << idx << "\n";
-    //   } else if (type == 'u') {
-    //     int pos, val;
-    //     cin >> pos >> val;
-    //     // Если позиция 1-based — раскомментируй:
-    //     // pos--;
-    //     segmentTree.update(pos, val);
-    //   }
-    // }
+    int M;
+    cin >> M;
+
+    char type;
+
+    string output_string="";
+
+    for (int i = 0; i < M; i++) {
+
+      cin >> type;
+
+      if (type == 's') {
+
+        int l, r, k;
+
+        cin >> l >> r >> k;
+
+        //Преобразуем номер в индекс записи в массиве
+        l--; r--;
+
+        int idx = segmentTree.findKthZeroInRange(l, r, k);
+
+        int output_index=idx;
+
+
+        //Преобразование из индексов в номера числе в массиве
+        if (idx>-1) {
+          output_index++;
+        }
+
+        output_string=output_string + " " + to_string(output_index);
+
+      } else if (type == 'u') {
+
+        int pos, val;
+
+        cin >> pos >> val;
+
+        //Преобразуем номер в индекс записи в массиве
+        pos--;
+
+        segmentTree.update(pos, val);
+      }
+    }
+
+    cout << output_string << endl;
+
 
     //vector<int> a = {0, 1, 0, 2, 0, 3, 0, 4}; - пример входного массива
     //0 1 0 2 0 3 0 4 - запись в консоли (8 элементов)
 
-    cout << "Исходное количество нулей на [0, 4]: " << segmentTree.query(0, 4) << endl;
-
-    cout << "Количество нулей на [2, 4]: " << segmentTree.query(2, 4) << endl; // было [2,5] → исправлено
-
-    segmentTree.update(2, 5); // меняем a[2] с 3 на 5 → не влияет на нули
-    cout << "После update(2, 5): нулей на [0,4]: " << segmentTree.query(0, 4) << endl;
-
-    segmentTree.update(3, 0); // меняем a[3] с 0 на 0 → ничего не изменилось (но обновление прошло)
-    cout << "После update(3, 0): нулей на [0,4]: " << segmentTree.query(0, 4) << endl;
-
-    cout << "Текущее состояние массива: ";
-    segmentTree.printArray();  // <-- наш новый метод
-
-    cout << "\n=== Поиск k-го нуля НА ОТРЕЗКЕ ===" << endl;
-
-    // Тестируем различные запросы
-    // vector<tuple<int, int, int>> testQueries = {
-    //   {0, 4, 1}, // 1-й ноль на [0,4]
-    //   {0, 4, 2}, // 2-й ноль на [0,4]
-    //   {0, 4, 3}, // 3-й ноль на [0,4]
-    //   {0, 4, 4}, // 4-й — не существует
-    //   {2, 4, 1}, // 1-й ноль на [2,4] → индекс 3
-    //   {2, 4, 2}, // 2-го нет
-    //   {0, 1, 1}, // 1-й ноль на [0,1] → 0
-    //   {0, 1, 2}, // 2-й → 1
-    //   {0, 1, 3}, // 3-го нет
-    // };
-
-    // for (auto [l, r, k] : testQueries) {
-    //   int idx = segmentTree.findKthZeroInRange(l, r, k);
-    //   cout << "findKthZeroInRange(" << l << ", " << r << ", " << k << ") = " << idx;
-    //   if (idx != -1) {
-    //     //cout << " (значение: " << segmentTree.arr[idx] << ")";
-    //   }
-    //   cout << endl;
-    // }
-
-    int idx = segmentTree.findKthZeroInRange(2, 4, 1);
-    cout << "findKthZeroInRange(" << 2 << ", " << 4 << ", " << 1 << ") = " << idx;
+    // cout << "Исходное количество нулей на [0, 4]: " << segmentTree.query(0, 4) << endl;
+    //
+    // cout << "Количество нулей на [2, 4]: " << segmentTree.query(2, 4) << endl; // было [2,5] → исправлено
+    //
+    // segmentTree.update(2, 5); // меняем a[2] с 3 на 5 → не влияет на нули
+    // cout << "После update(2, 5): нулей на [0,4]: " << segmentTree.query(0, 4) << endl;
+    //
+    // segmentTree.update(3, 0); // меняем a[3] с 0 на 0 → ничего не изменилось (но обновление прошло)
+    // cout << "После update(3, 0): нулей на [0,4]: " << segmentTree.query(0, 4) << endl;
+    //
+    // cout << "Текущее состояние массива: ";
+    // segmentTree.printArray();  // <-- наш новый метод
+    //
+    // cout << "\n=== Поиск k-го нуля НА ОТРЕЗКЕ ===" << endl;
+    //
+    // int idx = segmentTree.findKthZeroInRange(2, 4, 1);
+    // cout << "findKthZeroInRange(" << 2 << ", " << 4 << ", " << 1 << ") = " << idx;
 
 
     // Попробуем найти несуществующий
-    int k = 10;
-      idx = segmentTree.findKthZeroInRange(2, 4, 2);
-      if (idx == -1) {
-        cout << "\n" << k << "-й ноль на отрезке [2, 4] не существует." << endl;
-    }
+    // int k = 10;
+    //   idx = segmentTree.findKthZeroInRange(2, 4, 2);
+    //   if (idx == -1) {
+    //     cout << "\n" << k << "-й ноль на отрезке [2, 4] не существует." << endl;
+    // }
 
-     cout << "\n=== Состояние дерева отрезков (tree[1..]) ===" << endl;
-     segmentTree.printTree();
-
-
-
-
+     // cout << "\n=== Состояние дерева отрезков (tree[1..]) ===" << endl;
+     // segmentTree.printTree();
 
     return 0;
 }
