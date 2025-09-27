@@ -100,14 +100,13 @@ int main() {
 
   cin >> N;
 
- vector<int> inputArray(N);
+  vector<int> inputArray(N);
 
+  // int N=5;
 
-  //int N=5;
+  // vector<int> inputArray(N);
 
-  //vector<int> inputArray(N);
-
-  //inputArray={0, 0, 3, 0, 2};
+  // inputArray={0, 0, 3, 0, 2};
 
   for (int i = 0; i < N; ++i) {
     cin >> inputArray[i];
@@ -117,45 +116,45 @@ int main() {
 
   int M;
 
-   cin >> M;
+  cin >> M;
 
-   char type;
+  char type;
 
-   string output_string = "";
+  string output_string = "";
 
-   for (int i = 0; i < M; i++) {
-     cin >> type;
+  for (int i = 0; i < M; i++) {
+    cin >> type;
 
-     if (type == 's') {
-       int l, r, k;
+    if (type == 's') {
+      int l, r, k;
 
-       cin >> l >> r >> k;
+      cin >> l >> r >> k;
 
-       l--;
-       r--;
+      l--;
+      r--;
 
-       int idx = segmentTree.findKthZeroInRange(l, r, k);
+      int idx = segmentTree.findKthZeroInRange(l, r, k);
 
-       int output_index = idx;
+      int output_index = idx;
 
-       if (idx > -1) {
-         output_index++;
-       }
+      if (idx > -1) {
+        output_index++;
+      }
 
-       output_string = output_string + " " + to_string(output_index);
+      output_string = output_string + " " + to_string(output_index);
 
-     } else if (type == 'u') {
-       int pos, val;
+    } else if (type == 'u') {
+      int pos, val;
 
-       cin >> pos >> val;
+      cin >> pos >> val;
 
-       pos--;
+      pos--;
 
-       segmentTree.update(pos, val);
-     }
-   }
+      segmentTree.update(pos, val);
+    }
+  }
 
-   cout << output_string << endl;
+  cout << output_string << endl;
 
   return 0;
 }
