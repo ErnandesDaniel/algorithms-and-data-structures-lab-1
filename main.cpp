@@ -8,23 +8,21 @@ using namespace std;
 class SegmentTree {
 private:
   vector<int> tree;
-  vector<int> arr;
   int n;
 
-  void build(int v, int tl, int tr) {
+  void build(const vector<int>& input, int v, int tl, int tr) {
     if (tl == tr) {
-      tree[v] = (arr[tl] == 0) ? 1 : 0;
+      tree[v] = (input[tl] == 0) ? 1 : 0;
     } else {
       int tm = (tl + tr) / 2;
-      build(v * 2, tl, tm);
-      build(v * 2 + 1, tm + 1, tr);
+      build(input, v * 2, tl, tm);
+      build(input, v * 2 + 1, tm + 1, tr);
       tree[v] = tree[v * 2] + tree[v * 2 + 1];
     }
   }
 
   void update(int v, int tl, int tr, int pos, int val) {
     if (tl == tr) {
-      arr[pos] = val;
       tree[v] = (val == 0) ? 1 : 0;
     } else {
       int tm = (tl + tr) / 2;
@@ -72,9 +70,9 @@ private:
   }
 
 public:
-  SegmentTree(const vector<int>& input) : arr(input), n(input.size()) {
+  SegmentTree(const vector<int>& input) : n(input.size()) {
     tree.resize(4 * n);
-    build(1, 0, n - 1);
+    build(input, 1, 0, n - 1);
   }
 
   void update(int pos, int val) {
@@ -92,16 +90,6 @@ public:
     }
     cout << endl;
   }
-
-  void PrintArray() const {
-    cout << "Массив: ";
-    for (int i = 0; i < n; ++i) {
-      cout << arr[i];
-      if (i < n - 1)
-        cout << " ";
-    }
-    cout << endl;
-  }
 };
 
 int main() {
@@ -109,9 +97,17 @@ int main() {
   cin.tie(nullptr);
 
   int N;
+
   cin >> N;
 
-  vector<int> inputArray(N);
+ vector<int> inputArray(N);
+
+
+  //int N=5;
+
+  //vector<int> inputArray(N);
+
+  //inputArray={0, 0, 3, 0, 2};
 
   for (int i = 0; i < N; ++i) {
     cin >> inputArray[i];
@@ -120,45 +116,46 @@ int main() {
   SegmentTree segmentTree(inputArray);
 
   int M;
-  cin >> M;
 
-  char type;
+   cin >> M;
 
-  string output_string = "";
+   char type;
 
-  for (int i = 0; i < M; i++) {
-    cin >> type;
+   string output_string = "";
 
-    if (type == 's') {
-      int l, r, k;
+   for (int i = 0; i < M; i++) {
+     cin >> type;
 
-      cin >> l >> r >> k;
+     if (type == 's') {
+       int l, r, k;
 
-      l--;
-      r--;
+       cin >> l >> r >> k;
 
-      int idx = segmentTree.findKthZeroInRange(l, r, k);
+       l--;
+       r--;
 
-      int output_index = idx;
+       int idx = segmentTree.findKthZeroInRange(l, r, k);
 
-      if (idx > -1) {
-        output_index++;
-      }
+       int output_index = idx;
 
-      output_string = output_string + " " + to_string(output_index);
+       if (idx > -1) {
+         output_index++;
+       }
 
-    } else if (type == 'u') {
-      int pos, val;
+       output_string = output_string + " " + to_string(output_index);
 
-      cin >> pos >> val;
+     } else if (type == 'u') {
+       int pos, val;
 
-      pos--;
+       cin >> pos >> val;
 
-      segmentTree.update(pos, val);
-    }
-  }
+       pos--;
 
-  cout << output_string << endl;
+       segmentTree.update(pos, val);
+     }
+   }
+
+   cout << output_string << endl;
 
   return 0;
 }
